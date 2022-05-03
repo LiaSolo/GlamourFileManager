@@ -107,6 +107,7 @@
             this.buttonMove.TabIndex = 9;
             this.buttonMove.Text = "Переместить";
             this.buttonMove.UseVisualStyleBackColor = false;
+            this.buttonMove.Click += new System.EventHandler(this.buttonMove_Click);
             // 
             // buttonRename
             // 
@@ -249,7 +250,7 @@
             this.Controls.Add(this.textBoxFileWay);
             this.Controls.Add(this.listBoxFiles);
             this.Name = "MainForm";
-            this.Text = "Файловый менеджер";
+            this.Text = "Гламурный файловый менеджер";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCat)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

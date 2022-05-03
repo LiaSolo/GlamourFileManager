@@ -10,7 +10,7 @@ using System.IO;
 
 
 namespace Файловый_менеджер
-{
+{ 
     public partial class MainForm : Form
     {
         public MainForm()
@@ -29,7 +29,7 @@ namespace Файловый_менеджер
             Open(currentPath);
         }
         
-        //открытие следующей папочки
+        //переход в следующую папочку
         private void ChangeFolder(string currentPath)
         {            
             string[] foldersAndFiles = new DirectoryInfo(currentPath).EnumerateFiles().
@@ -44,6 +44,7 @@ namespace Файловый_менеджер
             listBoxFiles.Items.AddRange(foldersAndFiles);
         }
 
+        //открытие папочек и файликов
         private void Open(string currentPath)
         {
             if (File.Exists(currentPath))
@@ -65,6 +66,38 @@ namespace Файловый_менеджер
         {
             string forwardTo = textBoxFileWay.Text;
             Open(forwardTo);
+        }
+
+        //перемещение папочек и файликов
+        private void buttonMove_Click(object sender, EventArgs e)
+        {
+            SpecialForm newForm = new SpecialForm();
+            newForm.ShowDialog();
+            if (!newForm.IsAccepted()) return;
+           
+            string newPathWithoutIteam = newForm.ReturnTextBox();
+            MessageBox.Show(newPathWithoutIteam);
+
+            string oldPath = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
+            if (File.Exists(oldPath))
+            {
+                string newPath = Path.Combine(newPathWithoutIteam, listBoxFiles.SelectedItem.ToString());
+                File.Move(oldPath, newPath);
+                ChangeFolder(newPathWithoutIteam);
+            }
+            else if (Directory.Exists(oldPath))
+            {
+                string newPath = Path.Combine(newPathWithoutIteam, listBoxFiles.SelectedItem.ToString());
+                try
+                {
+                    Directory.Move(oldPath, newPath);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                ChangeFolder(newPathWithoutIteam);
+            }
         }
     }
 }
