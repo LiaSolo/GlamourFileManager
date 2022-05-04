@@ -32,7 +32,7 @@ namespace Файловый_менеджер
             return textBoxSpecial.Text;
         }
 
-        public bool IsAccepted() => flag;
+        public bool IsAccepted => flag;
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {

@@ -13,6 +13,8 @@ namespace Файловый_менеджер
 { 
     public partial class MainForm : Form
     {
+        //нужны ли проверки на исключения?
+        //проверка на существование нового пути? почему миша проверяет старый?
         public MainForm()
         {
             InitializeComponent();
@@ -62,6 +64,25 @@ namespace Файловый_менеджер
                 MessageBox.Show("Нужная папочка не существует :(");
             }
         }
+
+        //копирование папочек
+        void FoldersCopy(string currentPath, string newPath)
+        {
+            string newFolder = Path.Combine(newPath,
+                listBoxFiles.SelectedItem.ToString());
+            Directory.CreateDirectory(newFolder);
+            foreach (string oldFile in Directory.GetFiles(currentPath))
+            {
+                string newFile = Path.Combine(newFolder, Path.GetFileName(oldFile));
+                File.Copy(oldFile, newFile, false);
+            }
+            foreach (string folder in Directory.GetDirectories(currentPath))
+            {
+                FoldersCopy(folder, Path.Combine(newPath, Path.GetFileName(folder)));
+            }
+        }
+
+        //переход в папочку по пути, либо открытие файлика (но в папку, где файл, не открывает)
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             string forwardTo = textBoxFileWay.Text;
@@ -71,12 +92,12 @@ namespace Файловый_менеджер
         //перемещение папочек и файликов
         private void buttonMove_Click(object sender, EventArgs e)
         {
-            SpecialForm newForm = new SpecialForm();
-            newForm.ShowDialog();
-            if (!newForm.IsAccepted()) return;
+            SpecialForm moveForm = new SpecialForm();
+            moveForm.Text = buttonMove.Text;
+            moveForm.ShowDialog();
+            if (!moveForm.IsAccepted) return;
            
-            string newPathWithoutIteam = newForm.ReturnTextBox();
-            MessageBox.Show(newPathWithoutIteam);
+            string newPathWithoutIteam = moveForm.ReturnTextBox();
 
             string oldPath = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
             if (File.Exists(oldPath))
@@ -98,6 +119,94 @@ namespace Файловый_менеджер
                 }
                 ChangeFolder(newPathWithoutIteam);
             }
+        }
+
+        //переименовывание папочек и файликов
+        private void buttonRename_Click(object sender, EventArgs e)
+        {
+            SpecialForm renameForm = new SpecialForm();
+            renameForm.Text = buttonRename.Text;
+            renameForm.ShowDialog();
+            if (!renameForm.IsAccepted) return;
+
+            string newName = renameForm.ReturnTextBox();
+            
+            string ext = (new FileInfo(listBoxFiles.SelectedItem.ToString())).Extension;
+
+            string oldPath = Path.Combine(textBoxFileWay.Text, 
+                listBoxFiles.SelectedItem.ToString());
+            string newPath = Path.Combine(textBoxFileWay.Text, newName + ext);
+            MessageBox.Show(newPath);
+            if (Directory.Exists(oldPath))
+            {
+                Directory.Move(oldPath, newPath);
+                ChangeFolder(textBoxFileWay.Text);
+            }
+            if (File.Exists(oldPath))
+            {
+                File.Move(oldPath, newPath);
+                ChangeFolder(textBoxFileWay.Text);
+            }
+            
+        }
+
+        //копирование папочек и файликов
+        private void buttonCopy_Click(object sender, EventArgs e)
+        {
+            SpecialForm copyForm = new SpecialForm();
+            copyForm.Text = buttonCopy.Text;
+            copyForm.ShowDialog();
+            if (!copyForm.IsAccepted) return;
+
+            string newPath = copyForm.ReturnTextBox();
+
+            string oldPath = Path.Combine(textBoxFileWay.Text, 
+                listBoxFiles.SelectedItem.ToString());
+            if (File.Exists(oldPath))
+            {
+                string newFile = Path.Combine(copyForm.ReturnTextBox(),
+                listBoxFiles.SelectedItem.ToString());
+                File.Copy(oldPath, newFile, false);
+                ChangeFolder(newPath);
+            }
+            else if (Directory.Exists(oldPath))
+            {
+
+                FoldersCopy(oldPath, newPath);
+                
+                ChangeFolder(newPath);
+            }
+        }
+
+        //создание нового файлика
+        private void buttonNewFile_Click(object sender, EventArgs e)
+        {
+            SpecialForm newFileForm = new SpecialForm();
+            newFileForm.Text = buttonNewFile.Text;
+            newFileForm.ShowDialog();
+            if (!newFileForm.IsAccepted) return;
+
+            string newFileName = newFileForm.ReturnTextBox() + ".txt";
+            FileStream newFile = new FileStream(Path.Combine(textBoxFileWay.Text, newFileName), FileMode.CreateNew);
+            listBoxFiles.Items.Add(newFileName);
+        }
+
+        //создание новой папочки
+        private void buttonNewFolder_Click(object sender, EventArgs e)
+        {
+            SpecialForm newFolderForm = new SpecialForm();
+            newFolderForm.Text = buttonNewFolder.Text;
+            newFolderForm.ShowDialog();
+            if (!newFolderForm.IsAccepted) return;
+
+            string newFolderName = newFolderForm.ReturnTextBox();
+            Directory.CreateDirectory(Path.Combine(textBoxFileWay.Text, newFolderName));
+            listBoxFiles.Items.Add(newFolderName);
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
