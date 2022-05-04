@@ -42,7 +42,7 @@
             this.labelColour = new System.Windows.Forms.Label();
             this.labelFont = new System.Windows.Forms.Label();
             this.labelTextSize = new System.Windows.Forms.Label();
-            this.labelCat = new System.Windows.Forms.Label();
+            this.labelPicture = new System.Windows.Forms.Label();
             this.comboBoxFont = new System.Windows.Forms.ComboBox();
             this.comboBoxTextSize = new System.Windows.Forms.ComboBox();
             this.comboBoxCat = new System.Windows.Forms.ComboBox();
@@ -50,6 +50,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonNewFile = new System.Windows.Forms.Button();
             this.buttonNewFolder = new System.Windows.Forms.Button();
+            this.labelHello = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCat)).BeginInit();
             this.SuspendLayout();
             // 
@@ -180,14 +181,14 @@
             this.labelTextSize.TabIndex = 16;
             this.labelTextSize.Text = "Размер текста";
             // 
-            // labelCat
+            // labelPicture
             // 
-            this.labelCat.AutoSize = true;
-            this.labelCat.Location = new System.Drawing.Point(405, 433);
-            this.labelCat.Name = "labelCat";
-            this.labelCat.Size = new System.Drawing.Size(45, 16);
-            this.labelCat.TabIndex = 17;
-            this.labelCat.Text = "Котик";
+            this.labelPicture.AutoSize = true;
+            this.labelPicture.Location = new System.Drawing.Point(405, 433);
+            this.labelPicture.Name = "labelPicture";
+            this.labelPicture.Size = new System.Drawing.Size(45, 16);
+            this.labelPicture.TabIndex = 17;
+            this.labelPicture.Text = "Котик";
             // 
             // comboBoxFont
             // 
@@ -217,7 +218,7 @@
             // 
             this.pictureBoxCat.Location = new System.Drawing.Point(673, 50);
             this.pictureBoxCat.Name = "pictureBoxCat";
-            this.pictureBoxCat.Size = new System.Drawing.Size(292, 318);
+            this.pictureBoxCat.Size = new System.Drawing.Size(292, 324);
             this.pictureBoxCat.TabIndex = 21;
             this.pictureBoxCat.TabStop = false;
             // 
@@ -253,12 +254,22 @@
             this.buttonNewFolder.UseVisualStyleBackColor = false;
             this.buttonNewFolder.Click += new System.EventHandler(this.buttonNewFolder_Click);
             // 
+            // labelHello
+            // 
+            this.labelHello.AutoSize = true;
+            this.labelHello.Location = new System.Drawing.Point(762, 17);
+            this.labelHello.Name = "labelHello";
+            this.labelHello.Size = new System.Drawing.Size(85, 16);
+            this.labelHello.TabIndex = 25;
+            this.labelHello.Text = "Приветики, ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(968, 504);
+            this.Controls.Add(this.labelHello);
             this.Controls.Add(this.buttonNewFolder);
             this.Controls.Add(this.buttonNewFile);
             this.Controls.Add(this.buttonOK);
@@ -266,7 +277,7 @@
             this.Controls.Add(this.comboBoxCat);
             this.Controls.Add(this.comboBoxTextSize);
             this.Controls.Add(this.comboBoxFont);
-            this.Controls.Add(this.labelCat);
+            this.Controls.Add(this.labelPicture);
             this.Controls.Add(this.labelTextSize);
             this.Controls.Add(this.labelFont);
             this.Controls.Add(this.labelColour);
@@ -304,7 +315,7 @@
         private System.Windows.Forms.Label labelColour;
         private System.Windows.Forms.Label labelFont;
         private System.Windows.Forms.Label labelTextSize;
-        private System.Windows.Forms.Label labelCat;
+        private System.Windows.Forms.Label labelPicture;
         private System.Windows.Forms.ComboBox comboBoxFont;
         private System.Windows.Forms.ComboBox comboBoxTextSize;
         private System.Windows.Forms.ComboBox comboBoxCat;
@@ -312,6 +323,7 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonNewFile;
         private System.Windows.Forms.Button buttonNewFolder;
+        private System.Windows.Forms.Label labelHello;
     }
 }
 
