@@ -90,6 +90,7 @@
             this.buttonArchieve.TabIndex = 7;
             this.buttonArchieve.Text = "Архивировать";
             this.buttonArchieve.UseVisualStyleBackColor = false;
+            this.buttonArchieve.Click += new System.EventHandler(this.buttonArchieve_Click);
             // 
             // buttonCopy
             // 

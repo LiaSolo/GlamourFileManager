@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
+using System.IO.Compression;
 
 
 
@@ -21,6 +22,8 @@ namespace Файловый_менеджер
             DriveInfo[] drives = DriveInfo.GetDrives();
             listBoxFiles.Items.AddRange(drives);
         }
+
+        
 
         //двойное нажатие на элементы листбокса
         private void listBoxFiles_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -104,21 +107,14 @@ namespace Файловый_менеджер
             {
                 string newPath = Path.Combine(newPathWithoutIteam, listBoxFiles.SelectedItem.ToString());
                 File.Move(oldPath, newPath);
-                ChangeFolder(newPathWithoutIteam);
             }
-            else if (Directory.Exists(oldPath))
+            else //if (Directory.Exists(oldPath))
             {
                 string newPath = Path.Combine(newPathWithoutIteam, listBoxFiles.SelectedItem.ToString());
-                try
-                {
-                    Directory.Move(oldPath, newPath);
-                }
-                catch (Exception ex)
-                {
-
-                }
-                ChangeFolder(newPathWithoutIteam);
+                Directory.Move(oldPath, newPath);
+                
             }
+            ChangeFolder(newPathWithoutIteam);
         }
 
         //переименовывание папочек и файликов
@@ -140,14 +136,12 @@ namespace Файловый_менеджер
             if (Directory.Exists(oldPath))
             {
                 Directory.Move(oldPath, newPath);
-                ChangeFolder(textBoxFileWay.Text);
             }
-            if (File.Exists(oldPath))
+            else //if (File.Exists(oldPath))
             {
-                File.Move(oldPath, newPath);
-                ChangeFolder(textBoxFileWay.Text);
+                File.Move(oldPath, newPath);   
             }
-            
+            ChangeFolder(textBoxFileWay.Text);
         }
 
         //копирование папочек и файликов
@@ -167,15 +161,12 @@ namespace Файловый_менеджер
                 string newFile = Path.Combine(copyForm.ReturnTextBox(),
                 listBoxFiles.SelectedItem.ToString());
                 File.Copy(oldPath, newFile, false);
-                ChangeFolder(newPath);
             }
-            else if (Directory.Exists(oldPath))
+            else //if (Directory.Exists(oldPath))
             {
-
-                FoldersCopy(oldPath, newPath);
-                
-                ChangeFolder(newPath);
+                FoldersCopy(oldPath, newPath);  
             }
+            ChangeFolder(newPath);
         }
 
         //создание нового файлика
@@ -204,9 +195,47 @@ namespace Файловый_менеджер
             listBoxFiles.Items.Add(newFolderName);
         }
 
+        //удаление файликов и папочек
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            string iteamName;
+            if (listBoxFiles.SelectedItem != null)
+            {
+                iteamName = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
+            }
+            //если ничего не выбрано
+            else 
+            {
+                MessageBox.Show("Чтобы что-то удалить, надо это что-то сначала выбрать");
+                return;
+            }
 
+            if (File.Exists(iteamName))
+            {
+                File.Delete(iteamName);
+            }
+            else //if (Directory.Exists(iteamName))
+            {
+                Directory.Delete(iteamName, true);
+            }
+            
+            ChangeFolder(textBoxFileWay.Text);
+        }
+
+        private void buttonArchieve_Click(object sender, EventArgs e)
+        {
+            string oldPath = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
+            string newPath = oldPath + ".zip";
+
+            if (File.Exists(oldPath))
+            {
+                
+            }
+            else
+            {
+                ZipFile.CreateFromDirectory(oldPath, newPath);
+            }
+            ChangeFolder(textBoxFileWay.Text);
         }
     }
 }
