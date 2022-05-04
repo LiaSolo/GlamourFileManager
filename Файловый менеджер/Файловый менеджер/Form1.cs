@@ -132,7 +132,7 @@ namespace Файловый_менеджер
             string oldPath = Path.Combine(textBoxFileWay.Text, 
                 listBoxFiles.SelectedItem.ToString());
             string newPath = Path.Combine(textBoxFileWay.Text, newName + ext);
-            MessageBox.Show(newPath);
+
             if (Directory.Exists(oldPath))
             {
                 Directory.Move(oldPath, newPath);
@@ -222,6 +222,7 @@ namespace Файловый_менеджер
             ChangeFolder(textBoxFileWay.Text);
         }
 
+        //архивирование файликов и папочек
         private void buttonArchieve_Click(object sender, EventArgs e)
         {
             string oldPath = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
@@ -229,7 +230,12 @@ namespace Файловый_менеджер
 
             if (File.Exists(oldPath))
             {
-                
+                string newFolder = Path.Combine(textBoxFileWay.Text,
+                    Path.GetFileNameWithoutExtension(oldPath));
+                Directory.CreateDirectory(newFolder);
+                File.Copy(oldPath, Path.Combine(newFolder, listBoxFiles.SelectedItem.ToString()), false);
+                ZipFile.CreateFromDirectory(newFolder, newPath);
+                Directory.Delete(newFolder, true);
             }
             else
             {
