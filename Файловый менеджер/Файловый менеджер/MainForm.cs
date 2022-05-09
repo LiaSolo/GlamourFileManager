@@ -21,26 +21,13 @@ namespace Файловый_менеджер
         //проверка на существование нового пути?
         //вынести в отдельный класс работу с файлами
         public MainForm()
-        {
-            //пробует десереализовать, чтобы достать настройки, которые сохранились при прошлом запуске
-            //try
-            //{
-            //    BinaryFormatter formater = new BinaryFormatter();
-            //    using (FileStream configSettings = new FileStream("configSettings.txt", FileMode.OpenOrCreate))
-            //    {
-            //        Settings.GetCurrent((Settings)formater.Deserialize(configSettings));
-            //    }
-            //}
-            //catch (Exception ex) { }
-            
-
+        {         
             InitializeComponent();
             InitializeStyle();
 
             DriveInfo[] drives = DriveInfo.GetDrives();
             listBoxFiles.Items.AddRange(drives);
-            
-            
+                     
             ToolTip tips = new ToolTip();
             tips.ShowAlways = true;
             tips.SetToolTip(this.buttonArchieve, "Архивировать");
@@ -66,9 +53,9 @@ namespace Файловый_менеджер
             comboBoxTextSize_SelectedIndexChanged(comboBoxTextSize, null);
         }
 
-        private void ChangeTheme(string path, int red, int green, int blue, Color colorText)
+        private void ChangeTheme(int red, int green, int blue, Color colorText)
         {
-            this.BackgroundImage = Image.FromFile(path);
+           
             buttonSearch.BackColor = Color.FromArgb(red, green, blue);
             buttonRename.BackColor = Color.FromArgb(red, green, blue);
             buttonNewFolder.BackColor = Color.FromArgb(red, green, blue);
@@ -103,19 +90,24 @@ namespace Файловый_менеджер
             switch (((ComboBox)sender).Text)
             {
                 case "Розовый минимализм":
-                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\светло-розовый фон.jpg", 255, 128, 128, Color.White);                  
+                    this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.светло_розовый_фон;
+                    ChangeTheme(255, 128, 128, Color.White);                  
                     break;
                 case "Ночная птица":
-                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\фон чёрные перья.jpg", 107, 97, 103, Color.White);
+                    this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.фон_чёрные_перья;
+                    ChangeTheme(107, 97, 103, Color.White);
                     break;
                 case "Белый пушистик":
-                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\белый мех.jpg", 255, 255, 255, Color.Black);
+                    this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.белый_мех;
+                    ChangeTheme(255, 255, 255, Color.Black);
                     break;
                 case "Жемчуг":
-                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\жемчужный фон.jpg", 246, 224, 200, Color.Black); 
+                    this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.жемчужный_фон;
+                    ChangeTheme(246, 224, 200, Color.Black); 
                     break;
                 case "Сверкающий алмаз":
-                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\алмазный фон.jpg", 220, 198, 249, Color.Black);
+                    this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.алмазный_фон;
+                    ChangeTheme(220, 198, 249, Color.Black);
                     break;
             }
         }

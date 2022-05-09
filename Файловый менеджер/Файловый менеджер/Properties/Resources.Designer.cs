@@ -63,6 +63,36 @@ namespace Файловый_менеджер.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap алмазный_фон {
+            get {
+                object obj = ResourceManager.GetObject("алмазный фон", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap белый_мех {
+            get {
+                object obj = ResourceManager.GetObject("белый мех", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap жемчужный_фон {
+            get {
+                object obj = ResourceManager.GetObject("жемчужный фон", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap значок_архивировать {
             get {
                 object obj = ResourceManager.GetObject("значок архивировать", resourceCulture);
@@ -136,6 +166,26 @@ namespace Файловый_менеджер.Properties {
         internal static System.Drawing.Bitmap значок_удалить {
             get {
                 object obj = ResourceManager.GetObject("значок удалить", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap светло_розовый_фон {
+            get {
+                object obj = ResourceManager.GetObject("светло-розовый фон", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap фон_чёрные_перья {
+            get {
+                object obj = ResourceManager.GetObject("фон чёрные перья", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

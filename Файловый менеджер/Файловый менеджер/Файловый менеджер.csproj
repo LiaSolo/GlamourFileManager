@@ -127,5 +127,20 @@
   <ItemGroup>
     <None Include="значок новая папка.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="алмазный фон.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="белый мех.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="жемчужный фон.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="светло-розовый фон.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="фон чёрные перья.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
