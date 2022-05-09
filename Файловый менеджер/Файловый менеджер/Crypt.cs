@@ -6,23 +6,21 @@ namespace Файловый_менеджер
 {
     internal class Crypt
     {
-        //private static string _key = "<RSAKeyValue><Modulus>2Ili2sg7FKVY7NaaxM2SpTGJ/qri3OXrFPww6U4wkEFWhtZtnKwmffACoF8rzUoOgGx5YcSktNuhmVMRiqsovVd38B0EAtrOQ1mrcQMIERyjwif0u1lG3Ltb20RYKHVX0NL/IwX8Zaer3LOzvnz3kHaW5G8vFbzfBIOpDMPbpSE=</Modulus><Exponent>AQAB</Exponent><P>6Ah57ppLRt5Hb/S3fOHnAoD0SS3/twUQNAKBX6rYl+Ykzb4BWRuKVEa1acLWh7dC9s4+QXI5G5j+1QjeMSJH/w==</P><Q>7uclV/B+4QgIYNoUJE69817dg49dYohS9JfCkK6cLA1roUeY2/6SdWMVngtUajgUqABNfRYTpGn1Zs+LOhES3w==</Q><DP>TuOi4TbgZSXpz+y5/eGoczd41vCmwokcKzK23dnubia3WKRDPRKaA3FO+LhfzCDIybTxgbreI73u1mt/b+Eh7Q==</DP><DQ>CsaKPKkwT94Y4qVzex/CGZQR0blJsQQNGdMuh3AYwzPnwuKD1oho+rp5YyOHrzLQW7OHyziPsj7FPtnlobzbaQ==</DQ><InverseQ>k4N3zBFzSEjwU3DctKGyYAwfSrQk5sAG4aMA5Nvxhkwu2bSN6fmZ80IkYxmHVTqYs55CFhQ/4hxvhwmIh9nKXg==</InverseQ><D>1Yo3GLbZvLSLC5Vfr7FjatF92s2/SETdHibOPWZEch5dLEAOfLEwjIXCsVDpq1vbDT7sPURlgY4OwVuwMuY0FyTcSYwYo5ebMwnHPrlMbnWUSVZLNgD18jSOAaRty9uml/F/xjLo1R9LPw4cKvKzOwthokUjVZY3lz6bPFtUK1k=</D></RSAKeyValue>";
-        public static string Encrypt(string text)
+        static string closeKey = "<RSAKeyValue><Modulus>1/r62aEIsxbsRVukqFmfoOc+cD6QVbKC2QxpwMX/YvTsQagPmrzbwcqdCWHae4dh7qRfrFgzvfsXPELH8PnALdAgj1FiDm7oIl3ssIkW6S/a4sph5I/W4DP6mQdow2CjSo94hasKvQo7tqQZr8/SJLFz6d4I4JR9D/6gc5GxHaE=</Modulus><Exponent>AQAB</Exponent><P>3Ob+K3+jWErPrd7SFdr+/T++WWPs4r3Llo0nHAQCjUVOQHKiJ8mhiXXRnTVwzronLDOxcWtcYwWvDRKF/6FYdw==</P><Q>+kvKwy1asHicGrNqPOkhH7WDv0ONbFc6Svt/ulkgim2mMk2Ly1WmQ/wmjvzlCdPC9C9ORrxQFimR1DWruJTYpw==</Q><DP>Hfw9BCqPQazmA/P7EHxpoHbGn9uwjBa3S/hdFrB0qDiAJr9ow33bL42Opohah7U9HALoUzz/jXF4EY4yIkEEgQ==</DP><DQ>IDQAMnxzXqEl9ImA8bVM/bds6/7VA0t1xI/3LxKojSbuaypvAgpTCgw3Kc5/6XPFcYVknNU9uJxAlv0Qyv7boQ==</DQ><InverseQ>R9FTJdegFux59fJZl+vTvXdapNrmDR6OnrKbXenAwI5wSkxdYrMtz6b2NM8xV+upjanQqNws4kaOYrlKdPXLBg==</InverseQ><D>XuOEfELUqKIEkgBOWixuBmoyM2w5S31PIX7jo28Z4ecLOVlV6bzZq82RqsKUE7uKGiebZQOnT+tV7QLGBygi9u65wHQzao4FyTXa9L29J1wnCK+s3+utf3bDWw2TNwt0k9CwaNGEIBDh7c2OFiedkUGUtdqIk7T/PWR+FwguimU=</D></RSAKeyValue>";
+        public static string Encrypt(string pasw)
         {
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-            //rsa.FromXmlString(_key);
-            //byte[] EncryptContent = rsa.Encrypt(Encoding.UTF8.GetBytes(text), true);
-            return null;
-            //return Convert.ToBase64String(EncryptContent);
+            rsa.FromXmlString(closeKey);
+            byte[] encryptArray = rsa.Encrypt(Encoding.UTF8.GetBytes(pasw), true);
+            return Convert.ToBase64String(encryptArray);
         }
-        public static string Decrypt(string text)
+        public static string Decrypt(string pasw)
         {
-            var rsa = new RSACryptoServiceProvider();
-            //rsa.FromXmlString(_key);
-            //byte[] DecryptContent = rsa.Decrypt(Convert.FromBase64String(text), true);
-
-            return null;
-            //return Encoding.UTF8.GetString(DecryptContent);
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            //string closeKey = rsa.ToXmlString(true);
+            rsa.FromXmlString(closeKey);
+            byte[] decryptArray = rsa.Decrypt(Convert.FromBase64String(pasw), true);
+            return Encoding.UTF8.GetString(decryptArray);
         }
 
     }

@@ -28,13 +28,12 @@ namespace Файловый_менеджер
         {
             authorization.userName = textBoxUserName.Text;
             authorization.password = textBoxPassword.Text;
+            this.Hide();
+            new MainForm().Show();
         }
 
         private void buttonLogIn_Click(object sender, EventArgs e)
         {
-            //this.Hide();
-            //new MainForm().Show();
-
             string inputUserName = textBoxUserName.Text;
             string inputPassword = textBoxPassword.Text;
 
