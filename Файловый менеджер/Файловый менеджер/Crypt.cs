@@ -22,6 +22,5 @@ namespace Файловый_менеджер
             byte[] decryptArray = rsa.Decrypt(Convert.FromBase64String(pasw), true);
             return Encoding.UTF8.GetString(decryptArray);
         }
-
     }
 }

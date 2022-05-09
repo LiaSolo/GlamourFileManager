@@ -13,6 +13,8 @@ namespace Файловый_менеджер
             InitializeComponent();
             authorization = new Authorization();
             textBoxPassword.PasswordChar = '♡';
+
+            //попробовал десериализоваться, чтобы сравнить пароль и имя пользователя
             try
             {
                 BinaryFormatter formatter = new BinaryFormatter();
@@ -24,14 +26,23 @@ namespace Файловый_менеджер
             catch (Exception ex) { }
         }
 
+        //регистрация нового пользователя (но прошлый теряется), все настройки скинуты до дефолтныых
         private void buttonRegistration_Click(object sender, EventArgs e)
         {
             authorization.userName = textBoxUserName.Text;
             authorization.password = textBoxPassword.Text;
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream configs = new FileStream("configs.txt", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(configs, authorization);
+            }
+
             this.Hide();
             new MainForm().Show();
         }
 
+        //попытка входа существующего пользователя
         private void buttonLogIn_Click(object sender, EventArgs e)
         {
             string inputUserName = textBoxUserName.Text;
@@ -40,17 +51,18 @@ namespace Файловый_менеджер
             if (inputPassword == authorization.password && inputUserName == authorization.userName)
             {
                 this.Hide();
-                new MainForm().Show();
 
-                BinaryFormatter formatter = new BinaryFormatter();
-                using (FileStream configs = new FileStream("configs.txt", FileMode.OpenOrCreate))
+                BinaryFormatter formater = new BinaryFormatter();
+                using (FileStream configs = new FileStream("configSettings.txt", FileMode.OpenOrCreate))
                 {
-                    formatter.Serialize(configs, authorization);
+                    Settings.GetCurrent((Settings)formater.Deserialize(configs));
                 }
+
+                new MainForm().Show();  
             }
             else
             {
-                MessageBox.Show("Неверное имя пользователя или пароль");
+                MessageBox.Show("Солнышко, такого пользователя не существует :(");
                 textBoxUserName.Text = "";
                 textBoxPassword.Text = "";
             }

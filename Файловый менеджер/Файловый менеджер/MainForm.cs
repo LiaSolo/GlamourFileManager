@@ -22,19 +22,17 @@ namespace Файловый_менеджер
         //вынести в отдельный класс работу с файлами
         public MainForm()
         {
-            //DriveInfo[] drives = DriveInfo.GetDrives();
-            //listBoxFiles.Items.AddRange(drives);
-
-            try
-            {
-                BinaryFormatter formater = new BinaryFormatter();
-                using (FileStream configSetting = new FileStream("configSetting.txt", FileMode.OpenOrCreate))
-                {
-                    Settings.GetCurrent((Settings)formater.Deserialize(configSetting));
-                }
-
-            }
-            catch (Exception ex) { }
+            //пробует десереализовать, чтобы достать настройки, которые сохранились при прошлом запуске
+            //try
+            //{
+            //    BinaryFormatter formater = new BinaryFormatter();
+            //    using (FileStream configSettings = new FileStream("configSettings.txt", FileMode.OpenOrCreate))
+            //    {
+            //        Settings.GetCurrent((Settings)formater.Deserialize(configSettings));
+            //    }
+            //}
+            //catch (Exception ex) { }
+            
 
             InitializeComponent();
             InitializeStyle();
@@ -54,22 +52,50 @@ namespace Файловый_менеджер
             tips.SetToolTip(this.buttonRename, "Переименовать");
             tips.SetToolTip(this.buttonSearch, "Найти");
 
-            //тут у миши что-то, с чем надо разобраться
-
         }
 
         private void InitializeStyle()
         {
             comboBoxFont.Text = Settings.GetCurrent().currentFont;
-            comboBoxFont.Items.AddRange(Settings.GetCurrent().fonts); //почему бы не прописать сразу самой?
             comboBoxFont_SelectedIndexChanged(comboBoxFont, null);
 
             comboBoxTheme.Text = Settings.GetCurrent().currentTheme;
-            comboBoxTheme.Items.AddRange(Settings.GetCurrent().themes);
             comboBoxTheme_SelectedIndexChanged(comboBoxTheme, null);
 
+            comboBoxTextSize.Text = Settings.GetCurrent().currentTextSize.ToString();
+            comboBoxTextSize_SelectedIndexChanged(comboBoxTextSize, null);
         }
 
+        private void ChangeTheme(string path, int red, int green, int blue, Color colorText)
+        {
+            this.BackgroundImage = Image.FromFile(path);
+            buttonSearch.BackColor = Color.FromArgb(red, green, blue);
+            buttonRename.BackColor = Color.FromArgb(red, green, blue);
+            buttonNewFolder.BackColor = Color.FromArgb(red, green, blue);
+            buttonNewFile.BackColor = Color.FromArgb(red, green, blue);
+            buttonMove.BackColor = Color.FromArgb(red, green, blue);
+            buttonDelete.BackColor = Color.FromArgb(red, green, blue);
+            buttonCopy.BackColor = Color.FromArgb(red, green, blue);
+            buttonArchieve.BackColor = Color.FromArgb(red, green, blue);
+
+            listBoxFiles.BackColor = Color.FromArgb(red, green, blue);
+            textBoxFileWay.BackColor = Color.FromArgb(red, green, blue);
+            comboBoxFont.BackColor = Color.FromArgb(red, green, blue);
+            comboBoxTextSize.BackColor = Color.FromArgb(red, green, blue);
+            comboBoxTheme.BackColor = Color.FromArgb(red, green, blue);
+            labelTheme.BackColor = Color.FromArgb(red, green, blue);
+            labelFont.BackColor = Color.FromArgb(red, green, blue);
+            labelTextSize.BackColor = Color.FromArgb(red, green, blue);
+
+            listBoxFiles.ForeColor = colorText;
+            textBoxFileWay.ForeColor = colorText;
+            comboBoxFont.ForeColor = colorText;
+            comboBoxTextSize.ForeColor = colorText;
+            comboBoxTheme.ForeColor = colorText;
+            labelTextSize.ForeColor = colorText;
+            labelFont.ForeColor = colorText;
+            labelTheme.ForeColor = colorText;
+        }
 
         private void comboBoxTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -77,63 +103,59 @@ namespace Файловый_менеджер
             switch (((ComboBox)sender).Text)
             {
                 case "Розовый минимализм":
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\светло-розовый фон.jpg");
+                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\светло-розовый фон.jpg", 255, 128, 128, Color.White);                  
                     break;
                 case "Ночная птица":
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\фон чёрные перья.jpg");
+                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\фон чёрные перья.jpg", 107, 97, 103, Color.White);
                     break;
                 case "Белый пушистик":
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\белый мех.jpg");
+                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\белый мех.jpg", 255, 255, 255, Color.Black);
                     break;
                 case "Жемчуг":
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\фон жемчуг.jpg"); 
-                    break;
-                case "Серебряный блеск":
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\фон блеск серебро.jpg");
+                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\жемчужный фон.jpg", 246, 224, 200, Color.Black); 
                     break;
                 case "Сверкающий алмаз":
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\алмазный фон.jpg");
-                    break;
-                default:
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\светло-розовый фон.jpg");
+                    ChangeTheme(@"C:\Users\HP\Desktop\Мой файловый менеджер\Файловый менеджер\Файловый менеджер\алмазный фон.jpg", 220, 198, 249, Color.Black);
                     break;
             }
         }
 
-        public void InitializeTheme() //пока не надо
-        {
-            //string path = Settings.GetCurrent().currentPicture;
-            //this.BackgroundImage = Image.FromFile(path);
-            //ещё нужны цвета для кнопочек и боксов
-        }
-
-
-        //смена шрифта (без размера)
+        //смена шрифта
         private void comboBoxFont_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.GetCurrent().currentFont = ((ComboBox)sender).Text;
-            //float currentFontSize = ((ComboBox)sender).Font.Size;
-            string CcurrentFont = comboBoxFont.Text;
-            buttonCopy.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonArchieve.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonDelete.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonMove.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonNewFile.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonNewFolder.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonRename.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonSearch.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxFileWay.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            listBoxFiles.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            comboBoxFont.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            comboBoxTextSize.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            comboBoxTheme.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);        
-            labelColour.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            labelFont.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTextSize.Font = new Font(CcurrentFont, 8F, FontStyle.Regular, GraphicsUnit.Point);
+            string newFont = ((ComboBox)sender).Text;
+            Settings.GetCurrent().currentFont = newFont;
+            float currentTextSize = Settings.GetCurrent().currentTextSize;
+                       
+            textBoxFileWay.Font = new Font(newFont, currentTextSize);
+            listBoxFiles.Font = new Font(newFont, currentTextSize);
+            comboBoxFont.Font = new Font(newFont, currentTextSize);
+            comboBoxTextSize.Font = new Font(newFont, currentTextSize);
+            comboBoxTheme.Font = new Font(newFont, currentTextSize);        
+            labelTheme.Font = new Font(newFont, currentTextSize);
+            labelFont.Font = new Font(newFont, currentTextSize);
+            labelTextSize.Font = new Font(newFont, currentTextSize);
+        }
+
+        //смена размера текста
+        private void comboBoxTextSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.GetCurrent().currentTextSize = float.Parse(((ComboBox)sender).Text);
+            string currentFont = comboBoxFont.Text;
+            float newTextSize = Settings.GetCurrent().currentTextSize;
+
+            textBoxFileWay.Font = new Font(currentFont, newTextSize);
+            listBoxFiles.Font = new Font(currentFont, newTextSize);
+            comboBoxFont.Font = new Font(currentFont, newTextSize);
+            comboBoxTextSize.Font = new Font(currentFont, newTextSize);
+            comboBoxTheme.Font = new Font(currentFont, newTextSize);
+            labelTheme.Font = new Font(currentFont, newTextSize);
+            labelFont.Font = new Font(currentFont, newTextSize);
+            labelTextSize.Font = new Font(currentFont, newTextSize);
         }
 
 
-        #region кнопочки действий
+            #region кнопочки действий
 
         //двойное нажатие на элементы листбокса
         private void listBoxFiles_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -195,7 +217,7 @@ namespace Файловый_менеджер
             }
         }
 
-        //переход в папочку по пути, либо открытие файлика (но в папку, где файл, не открывает)
+        //переход в папочку по пути, либо открытие файлика (но в папку, где файл, не переходит)
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             string forwardTo = textBoxFileWay.Text;
@@ -354,29 +376,17 @@ namespace Файловый_менеджер
             ChangeFolder(textBoxFileWay.Text);
         }
 
-        #endregion
-
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
             BinaryFormatter formater = new BinaryFormatter();
-            using (FileStream configs = new FileStream("configSetting.txt", FileMode.OpenOrCreate))
+            using (FileStream configs = new FileStream("configSettings.txt", FileMode.OpenOrCreate))
             {
                 formater.Serialize(configs, Settings.GetCurrent());
             }
 
             Application.Exit();
         }
-
-        private void labelColour_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

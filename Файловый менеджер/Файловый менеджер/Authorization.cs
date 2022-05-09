@@ -8,9 +8,8 @@ namespace Файловый_менеджер
     {
         public Authorization() { }
 
-        //имя пользователя и пароль по умолчанию
-        public string userName = "Admin";
-        public string password = "Password";
+        public string userName;
+        public string password; 
 
         [OnSerializing]
         internal void OnSerializing(StreamingContext context)
@@ -23,8 +22,5 @@ namespace Файловый_менеджер
         {
             password = Crypt.Decrypt(password);
         }
-
-
-
     }
 }
