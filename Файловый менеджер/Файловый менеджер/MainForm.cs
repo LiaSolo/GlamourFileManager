@@ -17,9 +17,6 @@ namespace Файловый_менеджер
 { 
     public partial class MainForm : Form
     {
-        //нужны ли проверки на исключения?
-        //проверка на существование нового пути?
-        //вынести в отдельный класс работу с файлами
         public MainForm()
         {         
             InitializeComponent();
@@ -181,14 +178,13 @@ namespace Файловый_менеджер
                 Process.Start(new ProcessStartInfo(currentPath) { UseShellExecute = true });
                 return;
             }
-
-            if (Directory.Exists(currentPath)) 
+            else if (Directory.Exists(currentPath)) 
             {
                 ChangeFolder(currentPath);
             }
             else 
             {
-                MessageBox.Show("Нужная папочка не существует :(");
+                MessageBox.Show("Нужная папочка или файлик не существует :(");
             }
         }
 
@@ -225,6 +221,11 @@ namespace Файловый_менеджер
             if (!moveForm.IsAccepted) return;
            
             string newPathWithoutIteam = moveForm.ReturnTextBox();
+            if (!Directory.Exists(newPathWithoutIteam))
+            {
+                MessageBox.Show("Нужная папочка не существует :(");
+                return;
+            }
 
             string oldPath = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
             if (File.Exists(oldPath))
@@ -277,6 +278,12 @@ namespace Файловый_менеджер
             if (!copyForm.IsAccepted) return;
 
             string newPath = copyForm.ReturnTextBox();
+
+            if (!Directory.Exists(newPath))
+            {
+                MessageBox.Show("Нужная папочка не существует :(");
+                return;
+            }
 
             string oldPath = Path.Combine(textBoxFileWay.Text, 
                 listBoxFiles.SelectedItem.ToString());
