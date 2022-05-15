@@ -113,6 +113,16 @@ namespace Файловый_менеджер.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap значок_назад {
+            get {
+                object obj = ResourceManager.GetObject("значок назад", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap значок_найти {
             get {
                 object obj = ResourceManager.GetObject("значок найти", resourceCulture);

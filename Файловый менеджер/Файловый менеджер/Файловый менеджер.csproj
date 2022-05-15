@@ -142,5 +142,8 @@
   <ItemGroup>
     <None Include="фон чёрные перья.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="значок назад.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

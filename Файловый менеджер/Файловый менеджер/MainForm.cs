@@ -35,9 +35,10 @@ namespace Файловый_менеджер
             tips.SetToolTip(this.buttonNewFolder, "Новая папочка");
             tips.SetToolTip(this.buttonRename, "Переименовать");
             tips.SetToolTip(this.buttonSearch, "Найти");
-
+            tips.SetToolTip(this.buttonBack, "Найти");
         }
 
+        #region красота
         private void InitializeStyle()
         {
             comboBoxFont.Text = Settings.GetCurrent().currentFont;
@@ -51,8 +52,7 @@ namespace Файловый_менеджер
         }
 
         private void ChangeTheme(int red, int green, int blue, Color colorText)
-        {
-           
+        {         
             buttonSearch.BackColor = Color.FromArgb(red, green, blue);
             buttonRename.BackColor = Color.FromArgb(red, green, blue);
             buttonNewFolder.BackColor = Color.FromArgb(red, green, blue);
@@ -61,6 +61,7 @@ namespace Файловый_менеджер
             buttonDelete.BackColor = Color.FromArgb(red, green, blue);
             buttonCopy.BackColor = Color.FromArgb(red, green, blue);
             buttonArchieve.BackColor = Color.FromArgb(red, green, blue);
+            buttonBack.BackColor = Color.FromArgb(red, green, blue);
 
             listBoxFiles.BackColor = Color.FromArgb(red, green, blue);
             textBoxFileWay.BackColor = Color.FromArgb(red, green, blue);
@@ -143,8 +144,10 @@ namespace Файловый_менеджер
             labelTextSize.Font = new Font(currentFont, newTextSize);
         }
 
+        #endregion
 
-            #region кнопочки действий
+
+        #region кнопочки действий
 
         //двойное нажатие на элементы листбокса
         private void listBoxFiles_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -386,6 +389,25 @@ namespace Файловый_менеджер
 
             Application.Exit();
         }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            if (textBoxFileWay.Text == "") return;
+
+            DirectoryInfo parentPath = new DirectoryInfo(textBoxFileWay.Text).Parent;
+            if (parentPath == null)
+            {
+                listBoxFiles.Items.Clear();
+                DriveInfo[] drives = DriveInfo.GetDrives();
+                listBoxFiles.Items.AddRange(drives);
+                textBoxFileWay.Text = "";
+                return;
+            }
+
+            ChangeFolder(parentPath.FullName);
+            
+        }
+
         #endregion
     }
 }

@@ -45,6 +45,7 @@
             this.buttonCopy = new System.Windows.Forms.Button();
             this.buttonArchieve = new System.Windows.Forms.Button();
             this.buttonSearch = new System.Windows.Forms.Button();
+            this.buttonBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxFiles
@@ -65,7 +66,7 @@
             this.textBoxFileWay.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxFileWay.Location = new System.Drawing.Point(15, 28);
             this.textBoxFileWay.Name = "textBoxFileWay";
-            this.textBoxFileWay.Size = new System.Drawing.Size(624, 38);
+            this.textBoxFileWay.Size = new System.Drawing.Size(554, 38);
             this.textBoxFileWay.TabIndex = 2;
             // 
             // comboBoxTheme
@@ -246,6 +247,18 @@
             this.buttonSearch.UseVisualStyleBackColor = false;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
+            // buttonBack
+            // 
+            this.buttonBack.BackColor = System.Drawing.Color.White;
+            this.buttonBack.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_назад;
+            this.buttonBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonBack.Location = new System.Drawing.Point(589, 23);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(50, 50);
+            this.buttonBack.TabIndex = 25;
+            this.buttonBack.UseVisualStyleBackColor = false;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -254,6 +267,7 @@
             this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.светло_розовый_фон;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(801, 528);
+            this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonNewFolder);
             this.Controls.Add(this.buttonNewFile);
             this.Controls.Add(this.comboBoxTextSize);
@@ -297,6 +311,7 @@
         private System.Windows.Forms.ComboBox comboBoxTextSize;
         private System.Windows.Forms.Button buttonNewFile;
         private System.Windows.Forms.Button buttonNewFolder;
+        private System.Windows.Forms.Button buttonBack;
     }
 }
 
