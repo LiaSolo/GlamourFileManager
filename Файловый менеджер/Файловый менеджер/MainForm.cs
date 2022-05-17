@@ -219,7 +219,7 @@ namespace Файловый_менеджер
         private void buttonMove_Click(object sender, EventArgs e)
         {
             SpecialForm moveForm = new SpecialForm();
-            moveForm.Text = buttonMove.Text;
+            moveForm.Text = "Переместить";
             moveForm.ShowDialog();
             if (!moveForm.IsAccepted) return;
            
@@ -249,7 +249,7 @@ namespace Файловый_менеджер
         private void buttonRename_Click(object sender, EventArgs e)
         {
             SpecialForm renameForm = new SpecialForm();
-            renameForm.Text = buttonRename.Text;
+            renameForm.Text = "Переименовать";
             renameForm.ShowDialog();
             if (!renameForm.IsAccepted) return;
 
@@ -276,7 +276,7 @@ namespace Файловый_менеджер
         private void buttonCopy_Click(object sender, EventArgs e)
         {
             SpecialForm copyForm = new SpecialForm();
-            copyForm.Text = buttonCopy.Text;
+            copyForm.Text = "Копировать";
             copyForm.ShowDialog();
             if (!copyForm.IsAccepted) return;
 
@@ -307,12 +307,12 @@ namespace Файловый_менеджер
         private void buttonNewFile_Click(object sender, EventArgs e)
         {
             SpecialForm newFileForm = new SpecialForm();
-            newFileForm.Text = buttonNewFile.Text;
+            newFileForm.Text = "Новый файлик";
             newFileForm.ShowDialog();
             if (!newFileForm.IsAccepted) return;
 
             string newFileName = newFileForm.ReturnTextBox() + ".txt";
-            FileStream newFile = new FileStream(Path.Combine(textBoxFileWay.Text, newFileName), FileMode.CreateNew);
+            using (FileStream newFile = new FileStream(Path.Combine(textBoxFileWay.Text, newFileName), FileMode.CreateNew));
             listBoxFiles.Items.Add(newFileName);
         }
 
@@ -320,7 +320,7 @@ namespace Файловый_менеджер
         private void buttonNewFolder_Click(object sender, EventArgs e)
         {
             SpecialForm newFolderForm = new SpecialForm();
-            newFolderForm.Text = buttonNewFolder.Text;
+            newFolderForm.Text = "Новая папочка";
             newFolderForm.ShowDialog();
             if (!newFolderForm.IsAccepted) return;
 
