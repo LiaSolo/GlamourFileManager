@@ -5,37 +5,39 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.IO;
+using System.Diagnostics;
 
 namespace Файловый_менеджер
 {
-    public partial class SpecialForm : Form
+    public partial class DownloadForm : Form
     {
-        private bool flag;
-        public SpecialForm()
+        public DownloadForm()
         {
             InitializeComponent();
-            
         }
+
+        private bool flag;
 
         public void buttonOk_Click(object sender, EventArgs e)
         {
             flag = true;
             this.Close();
-            
+
         }
 
-        public string ReturnTextBox()
-        {
-            return textBoxSpecial.Text;
-        }
+        public string ReturnNewName() => textBoxNewName.Text;
+
+        public string ReturnLink() => textBoxLink.Text;
 
         public bool IsAccepted => flag;
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            textBoxSpecial.Text = "";
             flag = false;
             this.Close();
         }

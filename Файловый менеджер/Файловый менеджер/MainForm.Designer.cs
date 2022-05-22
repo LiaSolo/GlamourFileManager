@@ -46,6 +46,8 @@
             this.buttonArchieve = new System.Windows.Forms.Button();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
+            this.buttonDownload = new System.Windows.Forms.Button();
+            this.buttonCancelDownload = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxFiles
@@ -154,7 +156,7 @@
             this.buttonNewFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.buttonNewFolder.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_новая_папка;
             this.buttonNewFolder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonNewFolder.Location = new System.Drawing.Point(663, 303);
+            this.buttonNewFolder.Location = new System.Drawing.Point(663, 359);
             this.buttonNewFolder.Name = "buttonNewFolder";
             this.buttonNewFolder.Size = new System.Drawing.Size(50, 50);
             this.buttonNewFolder.TabIndex = 24;
@@ -166,7 +168,7 @@
             this.buttonNewFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.buttonNewFile.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_новый_файл;
             this.buttonNewFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonNewFile.Location = new System.Drawing.Point(663, 359);
+            this.buttonNewFile.Location = new System.Drawing.Point(719, 359);
             this.buttonNewFile.Name = "buttonNewFile";
             this.buttonNewFile.Size = new System.Drawing.Size(50, 50);
             this.buttonNewFile.TabIndex = 23;
@@ -178,7 +180,7 @@
             this.buttonDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.buttonDelete.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_удалить;
             this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonDelete.Location = new System.Drawing.Point(663, 415);
+            this.buttonDelete.Location = new System.Drawing.Point(663, 303);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(50, 50);
             this.buttonDelete.TabIndex = 11;
@@ -259,6 +261,30 @@
             this.buttonBack.UseVisualStyleBackColor = false;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
+            // buttonDownload
+            // 
+            this.buttonDownload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.buttonDownload.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_загрузить;
+            this.buttonDownload.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonDownload.Location = new System.Drawing.Point(663, 415);
+            this.buttonDownload.Name = "buttonDownload";
+            this.buttonDownload.Size = new System.Drawing.Size(50, 50);
+            this.buttonDownload.TabIndex = 26;
+            this.buttonDownload.UseVisualStyleBackColor = false;
+            this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
+            // 
+            // buttonCancelDownload
+            // 
+            this.buttonCancelDownload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.buttonCancelDownload.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_отменить;
+            this.buttonCancelDownload.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonCancelDownload.Location = new System.Drawing.Point(719, 415);
+            this.buttonCancelDownload.Name = "buttonCancelDownload";
+            this.buttonCancelDownload.Size = new System.Drawing.Size(50, 50);
+            this.buttonCancelDownload.TabIndex = 27;
+            this.buttonCancelDownload.UseVisualStyleBackColor = false;
+            this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -267,6 +293,8 @@
             this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.светло_розовый_фон;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(801, 528);
+            this.Controls.Add(this.buttonCancelDownload);
+            this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonNewFolder);
             this.Controls.Add(this.buttonNewFile);
@@ -312,6 +340,8 @@
         private System.Windows.Forms.Button buttonNewFile;
         private System.Windows.Forms.Button buttonNewFolder;
         private System.Windows.Forms.Button buttonBack;
+        private System.Windows.Forms.Button buttonDownload;
+        private System.Windows.Forms.Button buttonCancelDownload;
     }
 }
 

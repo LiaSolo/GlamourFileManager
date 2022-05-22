@@ -103,6 +103,16 @@ namespace Файловый_менеджер.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap значок_загрузить {
+            get {
+                object obj = ResourceManager.GetObject("значок загрузить", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap значок_копировать {
             get {
                 object obj = ResourceManager.GetObject("значок копировать", resourceCulture);
@@ -146,6 +156,16 @@ namespace Файловый_менеджер.Properties {
         internal static System.Drawing.Bitmap значок_новый_файл {
             get {
                 object obj = ResourceManager.GetObject("значок новый файл", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap значок_отменить {
+            get {
+                object obj = ResourceManager.GetObject("значок отменить", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

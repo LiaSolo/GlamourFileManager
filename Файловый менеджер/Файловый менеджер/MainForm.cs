@@ -5,26 +5,29 @@ using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Drawing;
 
 
-
+//https://psv4.userapi.com/c537232/u281672620/docs/d13/bd7d8866d7c6/Kitayskiy_Antidemidovich_-_3_chast.pdf?extra=439rN4vqFm7KBjx7kVtpgZosCgUpLHTRXs_2uIY70uaa0pqhjv42avg5m3E7OLPOtv1OHPOFQS7TN-4snd-wFrUuh8-n-9SqFuCqZcz6eIzJM_LAwnQzMjpsW40dh-dmBzO4L4mxjao3U9RMatv3Bw
 
 
 namespace Файловый_менеджер
-{ 
+{
     public partial class MainForm : Form
     {
         public MainForm()
-        {         
+        {
             InitializeComponent();
             InitializeStyle();
 
             DriveInfo[] drives = DriveInfo.GetDrives();
             listBoxFiles.Items.AddRange(drives);
-                     
+
             ToolTip tips = new ToolTip();
             tips.ShowAlways = true;
             tips.SetToolTip(this.buttonArchieve, "Архивировать");
@@ -35,7 +38,9 @@ namespace Файловый_менеджер
             tips.SetToolTip(this.buttonNewFolder, "Новая папочка");
             tips.SetToolTip(this.buttonRename, "Переименовать");
             tips.SetToolTip(this.buttonSearch, "Найти");
-            tips.SetToolTip(this.buttonBack, "Найти");
+            tips.SetToolTip(this.buttonBack, "Назад");
+            tips.SetToolTip(this.buttonDownload, "Скачать");
+            tips.SetToolTip(this.buttonCancelDownload, "Отменить скачивание");
         }
 
         #region красота
@@ -52,7 +57,7 @@ namespace Файловый_менеджер
         }
 
         private void ChangeTheme(int red, int green, int blue, Color colorText)
-        {         
+        {
             buttonSearch.BackColor = Color.FromArgb(red, green, blue);
             buttonRename.BackColor = Color.FromArgb(red, green, blue);
             buttonNewFolder.BackColor = Color.FromArgb(red, green, blue);
@@ -62,6 +67,8 @@ namespace Файловый_менеджер
             buttonCopy.BackColor = Color.FromArgb(red, green, blue);
             buttonArchieve.BackColor = Color.FromArgb(red, green, blue);
             buttonBack.BackColor = Color.FromArgb(red, green, blue);
+            buttonDownload.BackColor = Color.FromArgb(red, green, blue);
+            buttonCancelDownload.BackColor = Color.FromArgb(red, green, blue);
 
             listBoxFiles.BackColor = Color.FromArgb(red, green, blue);
             textBoxFileWay.BackColor = Color.FromArgb(red, green, blue);
@@ -89,7 +96,7 @@ namespace Файловый_менеджер
             {
                 case "Розовый минимализм":
                     this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.светло_розовый_фон;
-                    ChangeTheme(255, 128, 128, Color.White);                  
+                    ChangeTheme(255, 128, 128, Color.White);
                     break;
                 case "Ночная птица":
                     this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.фон_чёрные_перья;
@@ -101,7 +108,7 @@ namespace Файловый_менеджер
                     break;
                 case "Жемчуг":
                     this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.жемчужный_фон;
-                    ChangeTheme(246, 224, 200, Color.Black); 
+                    ChangeTheme(246, 224, 200, Color.Black);
                     break;
                 case "Сверкающий алмаз":
                     this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.алмазный_фон;
@@ -116,12 +123,12 @@ namespace Файловый_менеджер
             string newFont = ((ComboBox)sender).Text;
             Settings.GetCurrent().currentFont = newFont;
             float currentTextSize = Settings.GetCurrent().currentTextSize;
-                       
+
             textBoxFileWay.Font = new Font(newFont, currentTextSize);
             listBoxFiles.Font = new Font(newFont, currentTextSize);
             comboBoxFont.Font = new Font(newFont, currentTextSize);
             comboBoxTextSize.Font = new Font(newFont, currentTextSize);
-            comboBoxTheme.Font = new Font(newFont, currentTextSize);        
+            comboBoxTheme.Font = new Font(newFont, currentTextSize);
             labelTheme.Font = new Font(newFont, currentTextSize);
             labelFont.Font = new Font(newFont, currentTextSize);
             labelTextSize.Font = new Font(newFont, currentTextSize);
@@ -157,10 +164,10 @@ namespace Файловый_менеджер
                 listBoxFiles.SelectedItem.ToString());
             Open(currentPath);
         }
-        
+
         //переход в следующую папочку
         private void ChangeFolder(string currentPath)
-        {            
+        {
             string[] foldersAndFiles = new DirectoryInfo(currentPath).EnumerateFiles().
                   Where(files => (files.Attributes & FileAttributes.Hidden) == 0).
                   Select(files => files.Name).
@@ -181,16 +188,17 @@ namespace Файловый_менеджер
                 Process.Start(new ProcessStartInfo(currentPath) { UseShellExecute = true });
                 return;
             }
-            else if (Directory.Exists(currentPath)) 
+            else if (Directory.Exists(currentPath))
             {
                 ChangeFolder(currentPath);
             }
-            else 
+            else
             {
                 MessageBox.Show("Нужная папочка или файлик не существует :(");
             }
         }
-
+        
+        
         //копирование папочек
         void FoldersCopy(string currentPath, string newPath)
         {
@@ -222,7 +230,7 @@ namespace Файловый_менеджер
             moveForm.Text = "Переместить";
             moveForm.ShowDialog();
             if (!moveForm.IsAccepted) return;
-           
+
             string newPathWithoutIteam = moveForm.ReturnTextBox();
             if (!Directory.Exists(newPathWithoutIteam))
             {
@@ -240,7 +248,7 @@ namespace Файловый_менеджер
             {
                 string newPath = Path.Combine(newPathWithoutIteam, listBoxFiles.SelectedItem.ToString());
                 Directory.Move(oldPath, newPath);
-                
+
             }
             ChangeFolder(newPathWithoutIteam);
         }
@@ -254,10 +262,10 @@ namespace Файловый_менеджер
             if (!renameForm.IsAccepted) return;
 
             string newName = renameForm.ReturnTextBox();
-            
+
             string ext = (new FileInfo(listBoxFiles.SelectedItem.ToString())).Extension;
 
-            string oldPath = Path.Combine(textBoxFileWay.Text, 
+            string oldPath = Path.Combine(textBoxFileWay.Text,
                 listBoxFiles.SelectedItem.ToString());
             string newPath = Path.Combine(textBoxFileWay.Text, newName + ext);
 
@@ -267,7 +275,7 @@ namespace Файловый_менеджер
             }
             else //if (File.Exists(oldPath))
             {
-                File.Move(oldPath, newPath);   
+                File.Move(oldPath, newPath);
             }
             ChangeFolder(textBoxFileWay.Text);
         }
@@ -288,7 +296,7 @@ namespace Файловый_менеджер
                 return;
             }
 
-            string oldPath = Path.Combine(textBoxFileWay.Text, 
+            string oldPath = Path.Combine(textBoxFileWay.Text,
                 listBoxFiles.SelectedItem.ToString());
             if (File.Exists(oldPath))
             {
@@ -298,7 +306,7 @@ namespace Файловый_менеджер
             }
             else //if (Directory.Exists(oldPath))
             {
-                FoldersCopy(oldPath, newPath);  
+                FoldersCopy(oldPath, newPath);
             }
             ChangeFolder(newPath);
         }
@@ -312,7 +320,7 @@ namespace Файловый_менеджер
             if (!newFileForm.IsAccepted) return;
 
             string newFileName = newFileForm.ReturnTextBox() + ".txt";
-            using (FileStream newFile = new FileStream(Path.Combine(textBoxFileWay.Text, newFileName), FileMode.CreateNew));
+            using (FileStream newFile = new FileStream(Path.Combine(textBoxFileWay.Text, newFileName), FileMode.CreateNew)) ;
             listBoxFiles.Items.Add(newFileName);
         }
 
@@ -338,7 +346,7 @@ namespace Файловый_менеджер
                 iteamName = Path.Combine(textBoxFileWay.Text, listBoxFiles.SelectedItem.ToString());
             }
             //если ничего не выбрано
-            else 
+            else
             {
                 MessageBox.Show("Чтобы что-то удалить, надо это что-то сначала выбрать");
                 return;
@@ -352,7 +360,7 @@ namespace Файловый_менеджер
             {
                 Directory.Delete(iteamName, true);
             }
-            
+
             ChangeFolder(textBoxFileWay.Text);
         }
 
@@ -405,9 +413,84 @@ namespace Файловый_менеджер
             }
 
             ChangeFolder(parentPath.FullName);
-            
+
         }
 
+        #endregion
+
+        #region асинхронное скачивание
+        //сам не умеет определять тип файла
+        public static CancellationTokenSource cancelToken;
+
+        private async void buttonDownload_Click(object sender, EventArgs e)
+        {
+            DownloadForm newDownloadForm = new DownloadForm();
+            newDownloadForm.Text = "Скачать файлик";
+            newDownloadForm.ShowDialog();
+            if (!newDownloadForm.IsAccepted) return;
+
+            string fullFileName = Path.Combine(textBoxFileWay.Text, newDownloadForm.ReturnNewName());
+            await Task.Run(() => DownloadFile(newDownloadForm.ReturnLink(), fullFileName));
+            ChangeFolder(textBoxFileWay.Text);         
+        }
+
+        public static void DownloadFile(string link, string newFileName)
+        {
+            Stream remoteStream = null;
+            Stream localStream = null;
+            WebResponse response = null;
+
+            try
+            {
+                WebRequest request = WebRequest.Create(link);
+                if (request != null)
+                {
+                    response = request.GetResponse();
+                    if (response != null)
+                    {
+                        remoteStream = response.GetResponseStream();
+                        localStream = File.Create(newFileName);
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;            
+                        cancelToken = new CancellationTokenSource();
+             
+                        do
+                        {
+                            if (cancelToken.Token.IsCancellationRequested)
+                            {                               
+                                localStream.Close();
+                                File.Delete(newFileName);
+                                MessageBox.Show("Скачивание прервано :(");
+                                return;
+                            }
+                            bytesRead = remoteStream.Read(buffer, 0, buffer.Length);
+                            localStream.Write(buffer, 0, bytesRead);
+
+                        } while (bytesRead > 0);
+                    }
+                }
+
+                MessageBox.Show("Файлик успешно скачан :)");
+            }
+            catch //(Exception ex)
+            {
+               localStream.Close();
+                File.Delete(newFileName);
+                MessageBox.Show("Что-то пошло не так :(");
+                //MessageBox.Show(ex.Message);
+            }
+
+            response.Close();
+            
+            remoteStream.Close();
+            localStream.Close();
+            cancelToken.Dispose();
+        }
+
+        private void buttonCancelDownload_Click(object sender, EventArgs e)
+        {
+            cancelToken.Cancel();
+        }
         #endregion
     }
 }
