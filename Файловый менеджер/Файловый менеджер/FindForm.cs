@@ -31,7 +31,7 @@ namespace Файловый_менеджер
             if (File.Exists(pathFindedFile))
             {
                 string stringFile = File.ReadAllText(pathFindedFile);               
-                MatchCollection matches = regex.Matches(new DirectoryInfo(pathFindedFile).Name);
+                MatchCollection matches = regex.Matches(stringFile);
 
                 foreach (Match match in matches)
                 {
