@@ -48,6 +48,7 @@
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonDownload = new System.Windows.Forms.Button();
             this.buttonCancelDownload = new System.Windows.Forms.Button();
+            this.buttonSearchRegex = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxFiles
@@ -240,7 +241,7 @@
             // buttonSearch
             // 
             this.buttonSearch.BackColor = System.Drawing.Color.White;
-            this.buttonSearch.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_найти;
+            this.buttonSearch.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_галочка;
             this.buttonSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonSearch.Location = new System.Drawing.Point(663, 23);
             this.buttonSearch.Name = "buttonSearch";
@@ -285,6 +286,18 @@
             this.buttonCancelDownload.UseVisualStyleBackColor = false;
             this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
             // 
+            // buttonSearchRegex
+            // 
+            this.buttonSearchRegex.BackColor = System.Drawing.Color.White;
+            this.buttonSearchRegex.BackgroundImage = global::Файловый_менеджер.Properties.Resources.значок_найти;
+            this.buttonSearchRegex.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonSearchRegex.Location = new System.Drawing.Point(719, 23);
+            this.buttonSearchRegex.Name = "buttonSearchRegex";
+            this.buttonSearchRegex.Size = new System.Drawing.Size(50, 50);
+            this.buttonSearchRegex.TabIndex = 28;
+            this.buttonSearchRegex.UseVisualStyleBackColor = false;
+            this.buttonSearchRegex.Click += new System.EventHandler(this.buttonSearchRegex_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -293,6 +306,7 @@
             this.BackgroundImage = global::Файловый_менеджер.Properties.Resources.светло_розовый_фон;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(801, 528);
+            this.Controls.Add(this.buttonSearchRegex);
             this.Controls.Add(this.buttonCancelDownload);
             this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.buttonBack);
@@ -342,6 +356,7 @@
         private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.Button buttonDownload;
         private System.Windows.Forms.Button buttonCancelDownload;
+        private System.Windows.Forms.Button buttonSearchRegex;
     }
 }
 

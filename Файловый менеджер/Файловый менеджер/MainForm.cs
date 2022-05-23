@@ -41,6 +41,7 @@ namespace Файловый_менеджер
             tips.SetToolTip(this.buttonBack, "Назад");
             tips.SetToolTip(this.buttonDownload, "Скачать");
             tips.SetToolTip(this.buttonCancelDownload, "Отменить скачивание");
+            tips.SetToolTip(this.buttonSearchRegex, "Найти совпадения");
         }
 
         #region красота
@@ -59,6 +60,7 @@ namespace Файловый_менеджер
         private void ChangeTheme(int red, int green, int blue, Color colorText)
         {
             buttonSearch.BackColor = Color.FromArgb(red, green, blue);
+            buttonSearchRegex.BackColor = Color.FromArgb(red, green, blue);
             buttonRename.BackColor = Color.FromArgb(red, green, blue);
             buttonNewFolder.BackColor = Color.FromArgb(red, green, blue);
             buttonNewFile.BackColor = Color.FromArgb(red, green, blue);
@@ -153,7 +155,6 @@ namespace Файловый_менеджер
 
         #endregion
 
-
         #region кнопочки действий
 
         //двойное нажатие на элементы листбокса
@@ -165,7 +166,7 @@ namespace Файловый_менеджер
             Open(currentPath);
         }
 
-        //переход в следующую папочку
+        //переход в новую (указанную) папочку
         private void ChangeFolder(string currentPath)
         {
             string[] foldersAndFiles = new DirectoryInfo(currentPath).EnumerateFiles().
@@ -197,8 +198,7 @@ namespace Файловый_менеджер
                 MessageBox.Show("Нужная папочка или файлик не существует :(");
             }
         }
-        
-        
+               
         //копирование папочек
         void FoldersCopy(string currentPath, string newPath)
         {
@@ -386,6 +386,7 @@ namespace Файловый_менеджер
             ChangeFolder(textBoxFileWay.Text);
         }
 
+        //закрытие формы (сериализуемся)
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
@@ -398,6 +399,7 @@ namespace Файловый_менеджер
             Application.Exit();
         }
 
+        //вернуться назад
         private void buttonBack_Click(object sender, EventArgs e)
         {
             if (textBoxFileWay.Text == "") return;
@@ -414,6 +416,13 @@ namespace Файловый_менеджер
 
             ChangeFolder(parentPath.FullName);
 
+        }
+
+        //поиск совпадений
+        private void buttonSearchRegex_Click(object sender, EventArgs e)
+        {
+            FindForm findForm = new FindForm(textBoxFileWay.Text);
+            findForm.Show();
         }
 
         #endregion
@@ -491,6 +500,6 @@ namespace Файловый_менеджер
         {
             cancelToken.Cancel();
         }
-        #endregion
+        #endregion        
     }
 }

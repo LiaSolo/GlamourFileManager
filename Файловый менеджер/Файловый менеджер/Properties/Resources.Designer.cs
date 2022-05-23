@@ -103,6 +103,16 @@ namespace Файловый_менеджер.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap значок_галочка {
+            get {
+                object obj = ResourceManager.GetObject("значок галочка", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap значок_загрузить {
             get {
                 object obj = ResourceManager.GetObject("значок загрузить", resourceCulture);
