@@ -467,9 +467,10 @@ namespace Файловый_менеджер
                         {
                             if (cancelToken.Token.IsCancellationRequested)
                             {                               
+                                MessageBox.Show("Скачивание прервано :(");
                                 localStream.Close();
                                 File.Delete(newFileName);
-                                MessageBox.Show("Скачивание прервано :(");
+                                
                                 return;
                             }
                             bytesRead = remoteStream.Read(buffer, 0, buffer.Length);
@@ -480,19 +481,20 @@ namespace Файловый_менеджер
                 }
 
                 MessageBox.Show("Файлик успешно скачан :)");
+                if (localStream != null) localStream.Close();
             }
             catch //(Exception ex)
             {
-               localStream.Close();
+                if (localStream != null) localStream.Close();
                 File.Delete(newFileName);
                 MessageBox.Show("Что-то пошло не так :(");
                 //MessageBox.Show(ex.Message);
             }
 
-            response.Close();
+            if (response != null) response.Close();
             
-            remoteStream.Close();
-            localStream.Close();
+            if (remoteStream != null) remoteStream.Close();
+            
             cancelToken.Dispose();
         }
 
