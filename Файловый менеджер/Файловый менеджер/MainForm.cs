@@ -13,8 +13,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Drawing;
 
 
-//https://psv4.userapi.com/c537232/u281672620/docs/d13/bd7d8866d7c6/Kitayskiy_Antidemidovich_-_3_chast.pdf?extra=439rN4vqFm7KBjx7kVtpgZosCgUpLHTRXs_2uIY70uaa0pqhjv42avg5m3E7OLPOtv1OHPOFQS7TN-4snd-wFrUuh8-n-9SqFuCqZcz6eIzJM_LAwnQzMjpsW40dh-dmBzO4L4mxjao3U9RMatv3Bw
-
 
 namespace Файловый_менеджер
 {

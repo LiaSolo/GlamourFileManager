@@ -57,6 +57,15 @@ namespace Файловый_менеджер
                     {
                         MatchCollection matches = regex.Matches(new DirectoryInfo(pathFiles).Name);
                         if (matches.Count > 0) finded.Add(new DirectoryInfo(pathFiles).Name);
+
+                        string stringFile = File.ReadAllText(pathFiles);
+                        //надо искат совпадения только если ткст
+                        if (Path.GetExtension(pathFiles) == ".txt")
+                        {
+                            MatchCollection matchesss = regex.Matches(stringFile);
+                            foreach (Match match in matchesss) finded.Add($"В файлике {Path.GetFileName(pathFiles)}: {match.Groups[0].Value}");
+                        }                 
+                        
                     });
                 }
             }
