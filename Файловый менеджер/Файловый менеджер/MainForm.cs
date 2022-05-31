@@ -427,7 +427,7 @@ namespace Файловый_менеджер
 
         #region асинхронное скачивание
         //сам не умеет определять тип файла
-        public static CancellationTokenSource cancelToken;
+        public static CancellationTokenSource cancelToken = new CancellationTokenSource();
 
         private async void buttonDownload_Click(object sender, EventArgs e)
         {
@@ -481,12 +481,11 @@ namespace Файловый_менеджер
                 MessageBox.Show("Файлик успешно скачан :)");
                 if (localStream != null) localStream.Close();
             }
-            catch //(Exception ex)
+            catch
             {
                 if (localStream != null) localStream.Close();
                 File.Delete(newFileName);
                 MessageBox.Show("Что-то пошло не так :(");
-                //MessageBox.Show(ex.Message);
             }
 
             if (response != null) response.Close();
